@@ -1,3 +1,4 @@
+![ZeroCrypt Screenshot](assets/zerocrypt-preview.png)
 # ZeroEncrypt (ZeroCrypt)
 
 ZeroEncrypt è un tool di crittografia locale (client-side) che permette di criptare file, testo e link direttamente nel browser, senza upload verso il server.
