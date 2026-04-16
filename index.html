@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZeroCrypt – Cripta file, testo e link in modo sicuro</title>
+
+<meta name="description" content="Cripta file, testo e link direttamente nel tuo browser con ZeroCrypt. Crittografia client-side, zero-knowledge, nessun upload.">
+
+<link rel="stylesheet" href="style.css?v=20260414-4">
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <!-- LANGUAGE SWITCH -->
+  <div class="lang-switch">
+    <button type="button" data-lang="it" aria-pressed="true">IT</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+
+  <!-- LOGO -->
+  <img src="assets/zerocrypt-logo.png" class="logo">
+
+  <!-- HERO -->
+  <h1 id="title"><span class="title-prefix">Zero</span><span class="gradient-text">Crypt</span></h1>
+  <p class="tagline" id="tagline" data-i18n="header.tagline">Privacy First — Zero Knowledge Encryption</p>
+
+  <!-- TOOL -->
+  <div class="card">
+
+    <div class="drop-area" id="dropArea">
+      <div class="drop-inner">
+        <div class="drop-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 16V7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8.5 10.5 12 7l3.5 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20 16.5a4.5 4.5 0 0 0-1.7-8.67A6 6 0 0 0 6.2 9.2 3.5 3.5 0 0 0 6.5 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p id="dropText" class="drop-title" data-i18n="drop.title">Carica un file</p>
+        <p id="dropSub" class="drop-subtitle" data-i18n="drop.hint">Trascina qui o clicca per sfogliare</p>
+        <div id="dropSupport" class="drop-support" data-i18n="drop.support">Supporta file, testo e link</div>
+        <div class="drop-pill" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 8v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M10.3 4.4 3.5 16.2A2 2 0 0 0 5.2 19h13.6a2 2 0 0 0 1.7-2.8L13.7 4.4a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <span data-i18n="drop.maxSize">MAX 100MB</span>
+        </div>
+      </div>
+      <input type="file" id="fileInput">
+    </div>
+
+    <textarea id="inputText" placeholder="Incolla testo o link..." data-i18n-placeholder="input.placeholder"></textarea>
+
+    <div class="password-row">
+      <input type="password" id="password" placeholder="Inserisci password" data-i18n-placeholder="password.placeholder">
+      <button class="btn-secondary" type="button" onclick="togglePassword()" id="btnTogglePassword" data-i18n="password.show">Mostra</button>
+    </div>
+
+    <div class="buttons">
+      <button onclick="encryptData()" id="btnEncrypt" data-i18n="actions.encrypt">Cripta</button>
+      <button onclick="decryptData()" id="btnDecrypt" data-i18n="actions.decrypt">Decripta</button>
+    </div>
+
+    <div id="status" class="status" aria-live="polite"></div>
+
+    <textarea id="outputText" placeholder="Output..." readonly data-i18n-placeholder="output.placeholder"></textarea>
+
+    <div class="buttons">
+      <button onclick="copyOutput()" id="btnCopy" data-i18n="actions.copy">Copia</button>
+      <button onclick="downloadFile()" id="btnDownload" data-i18n="actions.download">Download</button>
+    </div>
+
+    <p class="badge" data-i18n="badge.local">LOCAL ENCRYPTION</p>
+
+  </div>
+
+  <!-- DESCRIZIONE -->
+  <section class="section">
+    <h2 id="aboutTitle" data-i18n="about.title">Cos’è ZeroCrypt?</h2>
+    <p id="aboutText" data-i18n="about.text">
+      ZeroCrypt è uno strumento di crittografia che funziona direttamente nel tuo browser.
+      I dati vengono criptati localmente prima di essere condivisi, garantendo il massimo livello di privacy.
+    </p>
+  </section>
+
+  <!-- COME FUNZIONA -->
+  <section class="section">
+    <h2 id="howTitle" data-i18n="how.title">Come funziona</h2>
+    <ol id="howList">
+      <li data-i18n="how.step1">Inserisci testo o carica un file</li>
+      <li data-i18n="how.step2">Inserisci una password</li>
+      <li data-i18n="how.step3">Clicca su Cripta</li>
+      <li data-i18n="how.step4">Scarica o copia il risultato</li>
+      <li data-i18n="how.step5">Condividi in sicurezza</li>
+    </ol>
+  </section>
+
+  <!-- FEATURES -->
+  <div class="features">
+
+    <div class="feature">
+      <div class="feature-top">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M10 8V6a4 4 0 0 1 8 0v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M7 10h14v10H7V10Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M12 15v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 data-i18n="features.encryption.title">CRITTOGRAFIA E2EE</h3>
+      </div>
+      <p data-i18n="features.encryption.desc">AES client-side. Nessun dato lascia il dispositivo.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-top">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M9 10a3 3 0 0 1 6 0v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M7 11h10v9H7v-9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M8 7a6 6 0 0 1 8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 data-i18n="features.zk.title">ZERO-KNOWLEDGE</h3>
+      </div>
+      <p data-i18n="features.zk.desc">Nessun accesso lato server.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-top">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-8-6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M14 2v6h6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M8 13h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 17h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 data-i18n="features.file.title">SUPPORTO FILE</h3>
+      </div>
+      <p data-i18n="features.file.desc">Compatibile con tutti i file.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-top">
+        <div class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M10 13a5 5 0 0 1 0-7l1.5-1.5a5 5 0 0 1 7 7L17 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M14 11a5 5 0 0 1 0 7L12.5 19.5a5 5 0 0 1-7-7L7 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 data-i18n="features.link.title">PROTEZIONE LINK</h3>
+      </div>
+      <p data-i18n="features.link.desc">Proteggi URL sensibili.</p>
+    </div>
+
+  </div>
+
+  <!-- FAQ -->
+  <section class="section">
+    <h2 data-i18n="faq.title">FAQ</h2>
+
+    <p><strong data-i18n="faq.q1.q">È sicuro?</strong><br>
+    <span data-i18n="faq.q1.a">Sì, utilizza crittografia moderna lato browser.</span></p>
+
+    <p><strong data-i18n="faq.q2.q">I dati vengono salvati?</strong><br>
+    <span data-i18n="faq.q2.a">No, tutto avviene localmente.</span></p>
+
+    <p><strong data-i18n="faq.q3.q">Posso recuperare la password?</strong><br>
+    <span data-i18n="faq.q3.a">No, per motivi di sicurezza.</span></p>
+  </section>
+
+  <!-- GLOSSARIO -->
+  <section class="section">
+    <h2 data-i18n="glossary.title">Glossario</h2>
+
+    <p><strong>AES:</strong> <span data-i18n="glossary.aes">algoritmo di crittografia avanzato.</span></p>
+    <p><strong>Zero Knowledge:</strong> <span data-i18n="glossary.zk">il server non conosce i dati.</span></p>
+    <p><strong>Client-side:</strong> <span data-i18n="glossary.client">elaborazione nel browser.</span></p>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta">
+    <p data-i18n="cta.text">Per maggiore sicurezza, utilizza ZeroCrypt insieme a ZeroDrop.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" data-i18n="footer.home">HOME</a>
+    <a href="#" data-i18n="footer.privacy">PRIVACY</a>
+    <a href="#" data-i18n="footer.tos">TOS</a>
+    <a href="#" data-i18n="footer.contacts">CONTACTS</a>
+  </footer>
+
+</div>
+
+<script src="script.js?v=20260414-4"></script>
+
+</body>
+</html>
