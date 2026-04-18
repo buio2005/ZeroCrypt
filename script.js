@@ -30,6 +30,7 @@ const I18N = {
     actions: {
       encrypt: "Cripta",
       decrypt: "Decripta",
+      import: "Importa .tiv",
       copy: "Copia",
       download: "Download"
     },
@@ -73,13 +74,15 @@ const I18N = {
     status: {
       encryptedSuccess: "✔ Criptato con successo",
       decryptedSuccess: "✔ Decriptazione riuscita",
-      decryptError: "❌ Password errata o file corrotto"
+      decryptError: "❌ Password errata o file corrotto",
+      importedSuccess: "✔ File .tiv importato. Inserisci la password e clicca Decripta."
     },
     alerts: {
       missingPassword: "Inserisci password",
       missingData: "Dati mancanti",
       noFile: "Nessun file",
-      fileTooLarge: "File troppo grande: consigliato ≤ 150MB per evitare problemi di memoria nel browser."
+      fileTooLarge: "File troppo grande: consigliato ≤ 150MB per evitare problemi di memoria nel browser.",
+      invalidTiv: "Seleziona un file .tiv valido."
     }
   },
   en: {
@@ -106,6 +109,7 @@ const I18N = {
     actions: {
       encrypt: "Encrypt",
       decrypt: "Decrypt",
+      import: "Import .tiv",
       copy: "Copy",
       download: "Download"
     },
@@ -149,19 +153,22 @@ const I18N = {
     status: {
       encryptedSuccess: "✔ Encrypted successfully",
       decryptedSuccess: "✔ Decryption successful",
-      decryptError: "❌ Wrong password or corrupted data"
+      decryptError: "❌ Wrong password or corrupted data",
+      importedSuccess: "✔ .tiv imported. Enter the password and click Decrypt."
     },
     alerts: {
       missingPassword: "Enter a password",
       missingData: "Missing data",
       noFile: "No file",
-      fileTooLarge: "File is too large: recommended ≤ 150MB to avoid browser memory issues."
+      fileTooLarge: "File is too large: recommended ≤ 150MB to avoid browser memory issues.",
+      invalidTiv: "Please select a valid .tiv file."
     }
   }
 };
 
 const dropArea = document.getElementById("dropArea");
 const fileInput = document.getElementById("fileInput");
+const tivInput = document.getElementById("tivInput");
 const langButtons = document.querySelectorAll(".lang-switch [data-lang]");
 
 function t(key) {
@@ -384,12 +391,44 @@ function copyOutput() {
   document.execCommand("copy");
 }
 
+function importTiv() {
+  if (!tivInput) return;
+  tivInput.value = "";
+  tivInput.click();
+}
+
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(reader.error || new Error("Read failed"));
+    reader.onload = () => {
+      const result = reader.result;
+      if (typeof result !== "string") return reject(new Error("Unexpected result"));
+      const commaIndex = result.indexOf(",");
+      resolve(commaIndex >= 0 ? result.slice(commaIndex + 1) : result);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function sanitizeFileName(name) {
+  const cleaned = String(name || "")
+    .replace(/[\/\\]/g, "-")
+    .replace(/[\u0000-\u001F\u007F]/g, "")
+    .trim();
+
+  return cleaned || "encrypted";
+}
+
 function downloadFile() {
   if (!encryptedBlob) return alert(t("alerts.noFile"));
 
+  const baseName = currentFileMeta ? sanitizeFileName(currentFileMeta) : "encrypted";
+  const downloadName = baseName.toLowerCase().endsWith(".tiv") ? baseName : `${baseName}.tiv`;
+
   const a = document.createElement("a");
   a.href = URL.createObjectURL(encryptedBlob);
-  a.download = "encrypted.tiv";
+  a.download = downloadName;
   a.click();
 }
 
@@ -425,6 +464,25 @@ function setStatus(message) {
 if (langButtons && langButtons.length > 0) {
   langButtons.forEach(btn => {
     btn.addEventListener("click", () => setLang(btn.getAttribute("data-lang")));
+  });
+}
+
+if (tivInput) {
+  tivInput.addEventListener("change", async () => {
+    const file = tivInput.files && tivInput.files[0] ? tivInput.files[0] : null;
+    if (!file) return;
+
+    const isTiv = file.name && file.name.toLowerCase().endsWith(".tiv");
+    if (!isTiv) return alert(t("alerts.invalidTiv"));
+
+    try {
+      const base64 = await readFileAsBase64(file);
+      const output = document.getElementById("outputText");
+      if (output) output.value = base64;
+      setStatus(t("status.importedSuccess"));
+    } catch {
+      alert(t("alerts.invalidTiv"));
+    }
   });
 }
 

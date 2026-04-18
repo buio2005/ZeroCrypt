@@ -234,6 +234,10 @@ h1 {
   display: none;
 }
 
+#tivInput {
+  display: none;
+}
+
 /* INPUT */
 textarea, input {
   width: 100%;
@@ -264,6 +268,7 @@ textarea {
 /* BUTTONS */
 .buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
 }

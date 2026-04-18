@@ -8,7 +8,7 @@
 
 <meta name="description" content="Cripta file, testo e link direttamente nel tuo browser con ZeroCrypt. Crittografia client-side, zero-knowledge, nessun upload.">
 
-<link rel="stylesheet" href="style.css?v=20260414-4">
+<link rel="stylesheet" href="style.css?v=20260414-6">
 </head>
 
 <body>
@@ -71,7 +71,10 @@
 
     <textarea id="outputText" placeholder="Output..." readonly data-i18n-placeholder="output.placeholder"></textarea>
 
+    <input type="file" id="tivInput" accept=".tiv">
+
     <div class="buttons">
+      <button class="btn-secondary" type="button" onclick="importTiv()" id="btnImport" data-i18n="actions.import">Importa .tiv</button>
       <button onclick="copyOutput()" id="btnCopy" data-i18n="actions.copy">Copia</button>
       <button onclick="downloadFile()" id="btnDownload" data-i18n="actions.download">Download</button>
     </div>
@@ -200,7 +203,7 @@
 
 </div>
 
-<script src="script.js?v=20260414-4"></script>
+<script src="script.js?v=20260414-6"></script>
 
 </body>
 </html>
