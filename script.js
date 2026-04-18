@@ -79,6 +79,9 @@ const I18N = {
     },
     alerts: {
       missingPassword: "Inserisci password",
+      missingDecryptPassword: "Password mancante. Inseriscila per decriptare.",
+      missingEncryptedData: "Sequenza criptata mancante. Incolla l'output oppure importa un file .tiv.",
+      missingDecryptBoth: "Dati mancanti: password e sequenza criptata. Inserisci la password e incolla l'output oppure importa un file .tiv.",
       missingData: "Dati mancanti",
       noFile: "Nessun file",
       fileTooLarge: "File troppo grande: consigliato ≤ 150MB per evitare problemi di memoria nel browser.",
@@ -158,6 +161,9 @@ const I18N = {
     },
     alerts: {
       missingPassword: "Enter a password",
+      missingDecryptPassword: "Missing password. Enter it to decrypt.",
+      missingEncryptedData: "Missing encrypted data. Paste the output or import a .tiv file.",
+      missingDecryptBoth: "Missing data: password and encrypted data. Enter the password and paste the output or import a .tiv file.",
       missingData: "Missing data",
       noFile: "No file",
       fileTooLarge: "File is too large: recommended ≤ 150MB to avoid browser memory issues.",
@@ -349,7 +355,9 @@ async function decryptData() {
   const password = document.getElementById("password").value;
   const input = document.getElementById("outputText").value;
 
-  if (!password || !input) return alert(t("alerts.missingData"));
+  if (!password && !input) return alert(t("alerts.missingDecryptBoth"));
+  if (!password) return alert(t("alerts.missingDecryptPassword"));
+  if (!input) return alert(t("alerts.missingEncryptedData"));
   setStatus("");
 
   const data = Uint8Array.from(atob(input), c => c.charCodeAt(0));
