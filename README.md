@@ -2,19 +2,22 @@
 
 # ZeroEncrypt (ZeroCrypt)
 
-ZeroEncrypt è un tool di crittografia locale (client-side) che permette di criptare file, testo e link direttamente nel browser, senza upload verso il server.
+**🌐 English** · [🇮🇹 Italiano](README.it.md)
 
-## Caratteristiche
+ZeroEncrypt is a client-side encryption tool that encrypts files, text and links
+directly in the browser, with no upload to the server.
 
-- Crittografia locale tramite Web Crypto API (AES-GCM)
-- Nessun upload: il server ospita solo file statici (HTML/CSS/JS)
-- Interfaccia IT/EN con preferenza salvata in locale
-- UI in stile “ZeroDrop family”
+## Features
 
-## Struttura progetto
+- Local encryption via the Web Crypto API (AES-GCM)
+- No uploads: the server hosts static files only (HTML/CSS/JS)
+- IT/EN interface, with the preference saved locally
+- "ZeroDrop family" UI style
+
+## Project structure
 
 ```text
-encrypt/
+ZeroCrypt/
 ├── assets/
 │   └── zerocrypt-logo.png
 ├── index.html
@@ -22,12 +25,14 @@ encrypt/
 └── style.css
 ```
 
-## Deploy
+## Deployment
 
-Carica i file su qualsiasi hosting statico (ad es. Apache/Nginx) mantenendo la struttura delle cartelle.
+Upload the files to any static hosting (Apache, Nginx, or similar), keeping the
+folder structure intact.
 
-Nota: la cartella `assets/` deve contenere almeno `zerocrypt-logo.png` come referenziato in [index.html](file:///c:/Users/boxbu/Documents/trae_projects/encrypt/index.html#L24-L26).
+Note: the `assets/` folder must contain at least `zerocrypt-logo.png`, which is
+referenced by `index.html`.
 
-## Licenza
+## License
 
 MIT
